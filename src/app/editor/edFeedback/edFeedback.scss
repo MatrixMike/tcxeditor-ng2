@@ -1,0 +1,21 @@
+.feedback {
+	margin-top: 10px;
+	padding-bottom: 15px;
+	/*background-color: rgb(108, 163, 245);*/
+
+	.comments {
+		& > div {
+			margin-bottom: 1em;
+		}
+	}
+}
+
+.form-container {
+	display: flex;
+}
+.comment, .email {
+	flex-grow: 2;
+}
+.button-container {
+	width: 100px;
+}

@@ -1,0 +1,19 @@
+<h2>Summary of ride ({{rideDate | date:"dd MMM yy"}})</h2>
+
+<div class="lap header">
+    <div class='lapNo'></div>
+	<div>Start</div>
+	<div>End</div>
+	<div>Time (s)</div>
+	<div>Distance (km)</div>
+	<div>Avg speed (km/h)</div>
+</div>
+
+<div class="lap" *ngFor="let lap of data; let i = index">
+    <div class='lapNo'><strong>{{i+1}}</strong></div>
+	<div>{{lap.startTime | date:"HH:mm:ss"}}</div>
+	<div>{{lap.endTime   | date:"HH:mm:ss"}}</div>
+	<div>{{lap.time | number:'1.0-0'}}</div>
+	<div>{{lap.distance | toKm | number:'1.2-2'}}</div>
+	<div>{{lap.avgSpeed  * 60 * 60 / 1000 | number:'1.1-1'}}</div>
+</div>

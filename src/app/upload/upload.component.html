@@ -1,0 +1,32 @@
+<div class="app-content">
+
+    <div>
+        <p>Ever left your Garmin running at the end of a ride? All your hard earned averages declined pointlessly?</p>
+        <p>This online editor enables you simply and easily to delete points from a tcx file. It then recalculates aggregate
+            ride data, and returns a replacement file to use with your favourite analytics tools.
+        </p>
+        <p>Give it a try or see it in action with some existing data. Note that there will be a short pause after you upload data, and that the site is currently not optimised for small devices.</p>
+    </div>
+
+    <div class="call-action">
+        <md-card>
+            <img md-card-image src="assets/tcx.png" alt="">
+            <md-card-content>
+                <h3>Upload a file</h3>
+                <input type="file" (change)="upload($event)">
+                <p>(You can convert a .fit file to .tcx using <a href="http://connect.garmin.com/"> Garmin Connect's</a> export
+                    functionality.)</p>
+            </md-card-content>
+        </md-card>
+
+        <md-card>
+            <img md-card-image src="assets/demo.png" alt="">
+            <md-card-content>
+                <h3>Try the demo</h3>
+                <button md-raised-button color="accent" (click)="demo()">Load demo data</button>
+            </md-card-content>
+        </md-card>
+    </div>
+    <!--<p><a [routerLink]="['feedback']">User comments and (anonymous) analytics</a></p>-->
+
+</div>

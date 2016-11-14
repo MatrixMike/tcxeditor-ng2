@@ -1,5 +1,23 @@
 # Firebase
 
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+
+{
+  "rules": {
+    ".read": true,
+    ".write": "!data.exists()"
+  }
+}
+prevent overwrite
+
+npm install --save @types/google-maps
+
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.19-3.
 
 ## Development server

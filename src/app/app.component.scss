@@ -1,0 +1,41 @@
+/* Header icon */
+md-toolbar {
+    flex-shrink: 0;
+    .app-content {
+        display: flex;
+    }
+    md-icon {
+        margin-right: 20px;
+    }
+}
+
+h2 {
+    margin-top: 0;
+}
+
+app-upload, app-editor, app-feedback {
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-y: scroll;
+    .app-content {
+        padding: 15px;
+    }
+}
+
+.app-content {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+footer {
+    height: 60px;
+    flex-shrink: 0;
+    background-color: #444;
+    font-size: small;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    &, a {
+        color: white;
+    }
+}

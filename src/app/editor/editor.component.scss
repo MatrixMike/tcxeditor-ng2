@@ -1,0 +1,23 @@
+.trackpoint-intro {
+    margin-top: 10px;
+}    
+    
+.laps-map {
+    display: flex;
+    height: 400px;
+    app-laps {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        flex-direction: column
+    }
+    app-map {
+        flex-grow: 2;
+        margin-left: 10px;
+        height: 100%;
+    }
+}
+
+.controls {
+    margin: 10px 0;
+}

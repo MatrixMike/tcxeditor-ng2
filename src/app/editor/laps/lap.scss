@@ -1,0 +1,23 @@
+header {
+	padding-left: 20px;
+	font-weight: bold;
+	div {
+		display: inline-block;
+		margin-left: 20px;
+	}
+}
+.lapContainer {
+	flex-grow: 2;
+	overflow-y: scroll;
+
+	/* Stops text being selected automatically by browser after shift+click */
+	user-select: none; /* CSS3 (little to no support) */
+	-ms-user-select: none; /* IE 10+ */
+	-moz-user-select: none; /* Gecko (Firefox) */
+	-webkit-user-select: none; /* Webkit (Safari, Chrome) */
+}
+
+/*.timestamp, .distance {
+	display: inline-block;
+	width: 49%;
+}*/

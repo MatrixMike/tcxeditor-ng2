@@ -1,0 +1,15 @@
+.lap {
+	display: flex;
+	justify-content: space-between;
+	div.lapNo {
+		width: 5%;
+		text-align: left;
+	}
+	div {
+		width: calc(95% / 5);
+		text-align: right;
+	}
+	&.header {
+		font-weight: bold;
+	}
+}

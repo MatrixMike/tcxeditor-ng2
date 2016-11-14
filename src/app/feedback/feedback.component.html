@@ -1,0 +1,12 @@
+<div class="app-content">
+  <ul>
+    <li class="text" *ngFor="let location of locations | async">
+      {{location.lat}}
+    </li>
+  </ul>
+  <!--<ul>
+    <li class="text" *ngFor="let comment of comments | async">
+      {{comment.comment}}
+    </li>
+  </ul>-->
+</div>
