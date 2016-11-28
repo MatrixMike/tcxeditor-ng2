@@ -34,7 +34,6 @@ export class UploaderService {
             reader.onload = function (evt: FileReaderEvent) {
                 console.log(evt);
                 resolve(evt.target.result);
-                // resolve(evt.srcElement.result);
             };
 
             reader.onerror = function (ev) {

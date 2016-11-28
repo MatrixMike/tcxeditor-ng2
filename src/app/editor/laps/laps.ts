@@ -41,7 +41,7 @@ export class LapsComponent implements OnChanges {
     // }
 
     ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-        console.log('ngOnChanges = ', changes);
+        // console.log('ngOnChanges = ', changes);
         // mapClickedTp is initially undefined and should be ignored
         if (changes.hasOwnProperty('mapClickedTp') &&
             changes['mapClickedTp'].currentValue) {

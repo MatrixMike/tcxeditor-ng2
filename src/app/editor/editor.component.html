@@ -20,11 +20,11 @@
   </div>
   <div class="controls">
     <button md-raised-button color="accent" (click)="deleteSelectedTps()">Delete points</button>
-    <a [routerLink]="['upload']" md-raised-button color="accent">Return to Upload</a>
+    <a routerLink="/upload" md-raised-button color="accent">Return to Upload</a>
     <a [href]="tcxData" md-raised-button color="accent" *ngIf="changesMade" download="{{fname}}">Download data</a>
   </div>
 
-  <app-feedback-widget [comments]="comments" (newComment)="handleComment($event)" background="primary">
+  <app-feedback-widget [comments]="comments | async" (newComment)="handleComment($event)">
   </app-feedback-widget>
 
 </div>

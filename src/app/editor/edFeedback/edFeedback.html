@@ -1,7 +1,7 @@
 <div class="feedback">
     <h3>Let me know your experience</h3>
 
-    <div *ngIf="!comments.length">
+    <div *ngIf="!comments" class="editor">
         <p>Did the app work? If so, let me now which device you use. If not, please provide details of what you did and what you
             hoped / expected it would do.</p>
 
@@ -22,13 +22,13 @@
         </form>
     </div>
 
-    <div *ngIf="comments.length">
+    <div *ngIf="comments" class="comments">
         <div class="row">
             <h4 class="date">Date</h4>
             <h4 class="comment">Comment</h4>
         </div>
-        <div *ngFor="let comment of comments" class="row comments">
-            <div class="date">{{comment.date}}</div>
+        <div *ngFor="let comment of comments" class="row">
+            <div class="date">{{comment.date | date:"MMM y"}}</div>
             <div class="comment">{{comment.comment}}</div>
         </div>
     </div>

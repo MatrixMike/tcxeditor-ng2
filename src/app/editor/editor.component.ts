@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { FirebaseListObservable } from 'angularfire2';
 
 import { EditorService } from '../editor.service';
-import {    getSummaryData, deletePoints } from './helpers';
-import {SummaryData, Laps, TpSelectionEvent} from './interfaces';
+import { getSummaryData, deletePoints } from './helpers';
+import { SummaryData, Laps, TpSelectionEvent } from './interfaces';
 
 import { FirebaseService } from '../firebase.service';
 
@@ -19,16 +21,17 @@ export class EditorComponent implements OnInit {
     clickedTp: TpSelectionEvent;
     fname: string = 'todelete.tcx';
     selectedTps: Object = {};
-    comments = [];
+    // comments: FirebaseListObservable<any>;
+    comments: Observable<any>;
     changesMade: boolean = false;
     rawLapsData: Laps = [];
     summaryData: SummaryData[] = [];
     tcxData: SafeUrl;
 
     constructor(private router: Router,
-                private sanitizer: DomSanitizer,
-                private editor: EditorService,
-                private fb: FirebaseService) { }
+        private sanitizer: DomSanitizer,
+        private editor: EditorService,
+        private fb: FirebaseService) { }
 
 
     ngOnInit() {
@@ -42,7 +45,7 @@ export class EditorComponent implements OnInit {
             //     this.editor.setTcxData('demo.tcx', json);
             //     this.getEditorData();
             // })
-          
+
         }
     }
 
@@ -79,15 +82,15 @@ export class EditorComponent implements OnInit {
     }
     initialiseSelectedTps() {
         this.selectedTps = {};
-        for (var i=0; i<this.rawLapsData.length; i++) {
+        for (var i = 0; i < this.rawLapsData.length; i++) {
             this.selectedTps[i] = {};
         }
     }
-     deleteSelectedTps() {
+    deleteSelectedTps() {
         let tmp = deletePoints(this.rawLapsData, this.selectedTps);
         // this.rawLapsData = deletePoints(this.rawLapsData, this.selectedTps);
         this.rawLapsData = tmp;
-        // shoudl not be needed as we have passed object around by ref
+        // should not be needed as we have passed object around by ref
         // this.main.replaceLaps(tmp);
         this.changesMade = true;
 
@@ -95,24 +98,18 @@ export class EditorComponent implements OnInit {
         this.summaryData = getSummaryData(this.rawLapsData);
 
         // Create download string 
-        this.tcxData = this.sanitizer.bypassSecurityTrustUrl("data:text/xml," + this.editor.getXml());   
+        this.tcxData = this.sanitizer.bypassSecurityTrustUrl("data:text/xml," + this.editor.getXml());
     }
-    // getData() {
-    //     let dataString = "data:text/xml,";
-    //     let xmlString = "<root>Hello xml2js!</root>";
 
-    //     return this.sanitizer.bypassSecurityTrustUrl(dataString + xmlString);
-    // }
-
-
-  handleComment(commentObj) {
-    //    console.log(commentObj);
-       this.fb.addComment(commentObj);
-        // this.main.postNewComment(commentObj)
-        // .subscribe( res => {
-        //     // console.log(res);
-        //     this.comments =
-        //         res.sort( (r1, r2) => r2.date - r1.date );
-        // });
+    handleComment(commentObj) {
+        this.fb.addComment(commentObj);
+        // Now show user the other comments
+        this.comments = 
+            this.fb.comments            
+                .map(v => {
+                    console.log(v);
+                    v['date'] = new Date(v['date']);
+                    return v;
+                });
     }
 }

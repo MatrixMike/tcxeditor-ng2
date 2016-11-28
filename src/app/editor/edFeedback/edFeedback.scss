@@ -3,19 +3,33 @@
 	padding-bottom: 15px;
 	/*background-color: rgb(108, 163, 245);*/
 
-	.comments {
-		& > div {
-			margin-bottom: 1em;
-		}
+}
+.editor {
+	.form-container {
+		display: flex;
 	}
+	.comment, .email {
+		flex-grow: 2;
+	}
+	.button-container {
+		width: 100px;
+	}
+
 }
 
-.form-container {
-	display: flex;
-}
-.comment, .email {
-	flex-grow: 2;
-}
-.button-container {
-	width: 100px;
+.comments {
+	.row {
+		display: flex;
+		margin-bottom: 1em;
+		.date {
+			width: 120px;
+			flex-grow: 0;
+			flex-shrink: 0;
+		}
+		.comment {
+			flex-grow: 2;
+			flex-shrink: 2;
+		}
+	}
+
 }

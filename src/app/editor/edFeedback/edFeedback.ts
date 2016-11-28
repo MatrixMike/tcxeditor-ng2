@@ -20,9 +20,7 @@ export class FeedbackWidgetComponent {
     addComment(c, e) {
         this.newComment.next({
             comment: c,
-            email: e,
-            date: new Date()
+            email: e
         });
-        // get other comments
     }
 }
