@@ -1,12 +1,26 @@
 <div class="app-content">
-  <ul>
-    <li class="text" *ngFor="let location of locations | async">
-      {{location.lat}}
-    </li>
-  </ul>
-  <!--<ul>
-    <li class="text" *ngFor="let comment of comments | async">
-      {{comment.comment}}
-    </li>
-  </ul>-->
+
+  <h2>Used around the world</h2>
+  
+  <md-card>
+    <div id="map-container" class="map"></div>
+  </md-card>
+
+  <div class="comments-container">
+
+    <h3>Comments received</h3>
+
+    <div *ngFor="let item of comments | async" class="row">
+      <div class="col-xs-2">
+        {{item.date | date:"dd MMM yyyy"}}
+      </div>
+      <div class="col-xs-7">
+        {{item.comment}}
+      </div>
+      <!--<div class="col-xs-3">
+        {{item.email}}
+      </div>-->
+    </div>
+  </div>
+
 </div>
