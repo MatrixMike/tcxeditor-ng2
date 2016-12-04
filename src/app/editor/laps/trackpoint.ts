@@ -6,7 +6,7 @@ import { Trackpoint } from '../interfaces';
     selector: 'app-trackpoint',
     template: `
     <label>
-      <input type="checkbox" [checked]='checked' (click)='handleClick($event)'>
+        <input type="checkbox" [checked]='checked' (click)='handleClick($event)'>
         <div class='timestamp'>{{tp.Time[0] | toDate | date:'HH:mm:ss'}}</div>
         <div class='distance'>{{tp.DistanceMeters[0] | toKm | number:'1.2-2'}} km</div>
    </label>

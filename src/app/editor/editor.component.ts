@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FirebaseListObservable } from 'angularfire2';
 
 import { EditorService } from '../editor.service';
-import { getSummaryData, deletePoints } from './helpers';
+import { findClosest, getSummaryData, deletePoints } from './helpers';
 import { SummaryData, Laps, TpSelectionEvent } from './interfaces';
 
 import { FirebaseService } from '../firebase.service';
@@ -31,21 +31,20 @@ export class EditorComponent implements OnInit {
     constructor(private router: Router,
         private sanitizer: DomSanitizer,
         private editor: EditorService,
-        private fb: FirebaseService) { }
-
+        private fb: FirebaseService,
+        private zone: NgZone) { }
 
     ngOnInit() {
         if (this.editor && this.editor.data) {
             this.getEditorData();
         } else {
-            console.log('Entering on editor prohibited')
-            this.router.navigate(['upload']);
-            // this.editor.getDemoData()
-            //   .subscribe( json => {
-            //     this.editor.setTcxData('demo.tcx', json);
-            //     this.getEditorData();
-            // })
-
+            // console.log('Entering on editor prohibited')
+            // this.router.navigate(['upload']);
+            this.editor.getDemoData()
+              .subscribe( json => {
+                this.editor.setTcxData('demo.tcx', json);
+                this.getEditorData();
+            });
         }
     }
 
@@ -60,7 +59,7 @@ export class EditorComponent implements OnInit {
     }
 
     lapsHandler(e: TpSelectionEvent) {
-        console.log(e);
+        console.log('lapsHandler', e);
         if (e.shift && e.lap === this.lastClick.lap) {
             // console.log(e.tp, this.lastClick.tp);
             let mn = Math.min(e.tp, this.lastClick.tp);
@@ -76,10 +75,23 @@ export class EditorComponent implements OnInit {
         this.lastClick = e;
     }
 
-    mapClickHandler(e: TpSelectionEvent) {
-        this.clickedTp = e;
-        this.lastClick = e;
+    // On a mouse click, scroll to tp and select it 
+    mapClickHandler(evt) {
+        let closest = findClosest(this.rawLapsData, evt.latLng);
+
+        let event = {
+            lap: closest[0],
+            tp: closest[1],
+            shift: false
+        };
+
+        this.zone.run( () => {
+            console.log('mapClickHandler', event);
+            this.lapsHandler(event);
+        });
+        document.querySelector('#lapContainer').scrollTop = document.querySelector('#tp'+event.lap+'-'+event.tp)['offsetTop'];
     }
+
     initialiseSelectedTps() {
         this.selectedTps = {};
         for (var i = 0; i < this.rawLapsData.length; i++) {

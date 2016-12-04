@@ -1,10 +1,7 @@
 import {
     Component, Input, Output, EventEmitter,
-    OnInit, OnChanges, SimpleChange, NgZone} from '@angular/core';
-import {findClosest} from '../helpers';
+    OnInit, OnChanges, SimpleChange} from '@angular/core';
 import {TpSelectionEvent, Laps, Lap, Trackpoint} from '../interfaces';
-
-// import 'google-maps';
 
 @Component({
     selector: 'app-map',
@@ -18,29 +15,16 @@ export class MapComponent implements OnInit, OnChanges {
     map: google.maps.Map;
     cyclePath: google.maps.Polyline;
 
-    constructor(public zone: NgZone) {}
+    constructor() {}
 
     ngOnInit() {
-        console.log('map init');
-
         this.map = new google.maps.Map(document.getElementById('map'), {
             center: new google.maps.LatLng(52, 0),
             zoom: 7
         });
 
-        this.map.addListener('click', (e) => {
-            let closest = findClosest(this.lapsData, e.latLng);
-
-            let event:TpSelectionEvent = {
-                lap: closest[0],
-                tp: closest[1],
-                shift:false
-            };
-
-            this.zone.run( () => {
-                this.clickHandler.next(event);
-                console.log(closest);
-            });
+        this.map.addListener('click', (evt: google.maps.MouseEvent) => {
+            this.clickHandler.next(evt);
         });
 
         this.map.addListener('zoom_changed', () => {
@@ -100,21 +84,9 @@ export class MapComponent implements OnInit, OnChanges {
 
         this.cyclePath.setMap(this.map);
 
-        google.maps.event.addListener(this.cyclePath, 'click', (e) => {
-            let closest = findClosest(this.lapsData, e.latLng);
-
-            let event:TpSelectionEvent = {
-                lap: closest[0],
-                tp: closest[1],
-                shift:false
-            };
-
-            this.zone.run( () => {
-                this.clickHandler.next(event);
-                console.log('cyclepath', closest);
-            });
+        google.maps.event.addListener(this.cyclePath, 'click', (evt: google.maps.MouseEvent) => {
+            this.clickHandler.next(evt);
         });
-
 
         if (fitBounds)
             this.map.fitBounds(mybounds);

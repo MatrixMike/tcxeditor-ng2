@@ -11,10 +11,17 @@
   </div>
 
   <div class="laps-map">
-    <app-laps [lapsData]="rawLapsData" [selectedTps]="selectedTps" [mapClickedTp]="clickedTp" (lapsHandler)="lapsHandler($event)">
+    <app-laps 
+      [lapsData]="rawLapsData" 
+      [selectedTps]="selectedTps" 
+      [mapClickedTp]="clickedTp" 
+      (lapsHandler)="lapsHandler($event)">
     </app-laps>
 
-    <app-map [lapsData]="rawLapsData" [selectedTps]="selectedTps" (clickHandler)="mapClickHandler($event)">
+    <app-map 
+      [lapsData]="rawLapsData" 
+      [selectedTps]="selectedTps" 
+      (clickHandler)="mapClickHandler($event)">
     </app-map>
 
   </div>
@@ -24,7 +31,7 @@
     <a [href]="tcxData" md-raised-button color="accent" *ngIf="changesMade" download="{{fname}}">Download data</a>
   </div>
 
-  <app-feedback-widget [comments]="comments | async" (newComment)="handleComment($event)">
+  <app-feedback-widget color="accent" [comments]="comments | async" (newComment)="handleComment($event)">
   </app-feedback-widget>
 
 </div>

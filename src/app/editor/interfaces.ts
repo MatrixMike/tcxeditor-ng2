@@ -11,15 +11,18 @@ export interface TCXData {
 }
 
 export type Laps = Lap[];
+
 export interface Lap {
     Track: Track[];
     TotalTimeSeconds: number[];
     DistanceMeters: number[];
     Extensions: any;
 }
+
 export interface Track {
     Trackpoint: Trackpoint[];
 }
+
 export interface Trackpoint {
     DistanceMeters: string[];
     AltitudeMeters: string[];
@@ -30,6 +33,7 @@ interface Position {
     LatitudeDegrees: string[];
     LongitudeDegrees: string[];
 }
+
 export type TpSelectionEvent = {
     tp: number;
     lap: number;

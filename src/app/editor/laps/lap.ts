@@ -12,6 +12,7 @@ import { Trackpoint} from '../interfaces';
     <app-trackpoint
         *ngFor='let tp of lapData; let i=index'
         [ngClass]="{selected:selectedTps[i]}"
+        id='{{"tp"+index+"-"+i}}'
         [tp]='tp'
         [checked]='selectedTps[i]'
         (clicked)='handleClick(i)($event)'>
@@ -29,8 +30,8 @@ import { Trackpoint} from '../interfaces';
             background-color: rgb(244, 233, 203);
         }
     
-    `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    `]
+    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LapComponent {
     @Input() lapData: Trackpoint[];
@@ -57,4 +58,5 @@ export class LapComponent {
     handleLapClick() {
         console.log('i, evt');
     }
+
 }

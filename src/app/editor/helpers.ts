@@ -1,4 +1,4 @@
-import {TCXData, Laps} from './interfaces';
+import {TCXData, Laps, Lap } from './interfaces';
 
 /* getLapTime/Distance should really use last point of previous lap to calculate
  */
