@@ -9,6 +9,8 @@ header {
 .lapContainer {
 	flex-grow: 2;
 	overflow-y: scroll;
+	// With this, the first row of Lap0 will have offsetTop = 20
+	position: relative;
 
 	/* Stops text being selected automatically by browser after shift+click */
 	user-select: none; /* CSS3 (little to no support) */

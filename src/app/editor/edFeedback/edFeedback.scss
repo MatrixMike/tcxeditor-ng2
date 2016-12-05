@@ -1,7 +1,9 @@
+@import '~@angular/material/core/theming/theming';
+
 .feedback {
 	margin-top: 10px;
-	padding-bottom: 15px;
-	/*background-color: rgb(108, 163, 245);*/
+	padding: 15px;
+	background-color: antiquewhite;
 
 }
 .editor {

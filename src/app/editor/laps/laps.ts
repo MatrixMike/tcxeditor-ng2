@@ -13,7 +13,7 @@ import {TpSelectionEvent} from '../interfaces';
       <div class="timestamp">Time</div>
       <div class="distance">Distance</div>
     </header>
-    <div class="lapContainer" id='lapContainer'>
+    <div class='lapContainer' id='lapContainer' [scrollTo]='lapScrollTo' >
       <app-lap
           *ngFor="let lap of lapsData; let i=index"
           [lapData]="lap.Track[0].Trackpoint"
@@ -30,6 +30,7 @@ export class LapsComponent implements OnChanges {
     @Input() lapsData: Object[];
     @Input() selectedTps: Object;
     @Input() mapClickedTp: TpSelectionEvent;
+    @Input() lapScrollTo: TpSelectionEvent;
     @Output() lapsHandler = new EventEmitter();
 
     constructor() {}
@@ -43,21 +44,21 @@ export class LapsComponent implements OnChanges {
     ngOnChanges(changes: { [propName: string]: SimpleChange }) {
         // console.log('ngOnChanges = ', changes);
         // mapClickedTp is initially undefined and should be ignored
-        if (changes.hasOwnProperty('mapClickedTp') &&
-            changes['mapClickedTp'].currentValue) {
+        // if (changes.hasOwnProperty('mapClickedTp') &&
+        //     changes['mapClickedTp'].currentValue) {
 
-            let evt:TpSelectionEvent = changes['mapClickedTp'].currentValue;
+        //     let evt:TpSelectionEvent = changes['mapClickedTp'].currentValue;
 
-            console.log(evt.lap, evt.tp);
+        //     console.log(evt.lap, evt.tp);
 
-            this.selectedTps[evt.lap][evt.tp] = true;
+        //     this.selectedTps[evt.lap][evt.tp] = true;
 
-            var lapsContainer = document.getElementById('lapContainer');
-            const options: ScrollIntoViewOptions = {
-              block: 'start',
-              behavior: 'smooth'
-            }
-            lapsContainer.children[evt.lap].children[evt.tp].scrollIntoView(options);
-        }
+        //     var lapsContainer = document.getElementById('lapContainer');
+            // const options: ScrollIntoViewOptions = {
+            //   block: 'start',
+            //   behavior: 'smooth'
+            // }
+            // lapsContainer.children[evt.lap].children[evt.tp].scrollIntoView(options);
+        // }
     }
 }
