@@ -27,7 +27,6 @@ export class EditorComponent implements OnInit {
     rawLapsData: Laps = [];
     summaryData: SummaryData[] = [];
     tcxData: SafeUrl;
-    lapScrollTo: number;
 
     constructor(private router: Router,
         private sanitizer: DomSanitizer,
@@ -87,13 +86,10 @@ export class EditorComponent implements OnInit {
         };
 
         this.zone.run( () => {
-            // console.log('mapClickHandler', event);
+            console.log('mapClickHandler', event);
             this.lapsHandler(event);
-            let off = Math.max(0, document.querySelector('#tp'+event.lap+'-'+event.tp)['offsetTop'] - 40);
-            console.log(`#tp${event.lap}-${event.tp} at ${off}`);
-            // document.querySelector('#lapContainer').scrollTop = off;
-            this.lapScrollTo = off;
         });
+        document.querySelector('#lapContainer').scrollTop = document.querySelector('#tp'+event.lap+'-'+event.tp)['offsetTop'];
     }
 
     initialiseSelectedTps() {

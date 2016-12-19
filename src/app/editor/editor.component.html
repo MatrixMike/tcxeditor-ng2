@@ -1,4 +1,4 @@
-<div id="editor">
+<div id="editor" class="app-content">
 
   <app-summary [data]="summaryData"></app-summary>
 
@@ -14,8 +14,7 @@
     <app-laps 
       [lapsData]="rawLapsData" 
       [selectedTps]="selectedTps" 
-      [mapClickedTp]="clickedTp"
-      [lapScrollTo]="lapScrollTo"
+      [mapClickedTp]="clickedTp" 
       (lapsHandler)="lapsHandler($event)">
     </app-laps>
 
@@ -26,7 +25,6 @@
     </app-map>
 
   </div>
-  
   <div class="controls">
     <button md-raised-button color="accent" (click)="deleteSelectedTps()">Delete points</button>
     <a routerLink="/upload" md-raised-button color="accent">Return to Upload</a>

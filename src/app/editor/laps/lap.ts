@@ -48,9 +48,15 @@ export class LapComponent {
                 shift: childEvent.shift
             });            
         }
+        // console.log(i, evt);
+        // this.lapEventHandler.next({
+        //     tp: i,
+        //     lap: this.index,
+        //     shift: evt.shiftKey
+        // });
     }
-
     handleLapClick() {
         console.log('i, evt');
     }
+
 }

@@ -25,7 +25,6 @@ import { UploaderService } from './uploader.service';
 import { EditorService } from './editor.service';
 import { FirebaseService } from './firebase.service';
 
-import { ScrollToDirective } from './scroll-to.directive';
 import { ToDatePipe } from './pipes/ToDatePipe';
 import { ToKmPipe } from './pipes/ToKmPipe';
 
@@ -50,7 +49,6 @@ import { ToKmPipe } from './pipes/ToKmPipe';
     LapComponent,
     TrackpointComponent,
     FeedbackWidgetComponent,
-    ScrollToDirective,
     ToDatePipe,
     ToKmPipe
   ],
