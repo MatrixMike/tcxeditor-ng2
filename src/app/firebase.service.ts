@@ -1,17 +1,31 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { Observable } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
 @Injectable()
 export class FirebaseService {
 
-    comments: FirebaseListObservable<Object>;
+    firebaseComments: FirebaseListObservable<Object[]>;
+    comments: Observable<Object[]>;
     locations: FirebaseListObservable<Object>;
 
     constructor(private af: AngularFire) {
-        this.comments = 
+        this.firebaseComments = 
             this.af.database.list(environment.stem + '/comments');
+        
+        this.comments =
+                this.firebaseComments.map(data => {
+                    return data.map(v => Object.assign(v, {date: new Date(v['date'])}))
+                        .sort( (c1, c2) => c2.date.valueOf() - c1.date.valueOf() );
+                })
+
+            // this.af.database.list(environment.stem + '/comments', {
+            //     query: {
+            //         orderByChild: 'date'
+            //     }
+            // });
         this.locations = 
             this.af.database.list(environment.stem + '/locations');
     }
@@ -24,7 +38,7 @@ export class FirebaseService {
     }
 
     addComment(comment) {
-        return this.comments.push(this.insertDate(comment))
+        return this.firebaseComments.push(this.insertDate(comment))
             .catch(err => console.error(err));
     }
 

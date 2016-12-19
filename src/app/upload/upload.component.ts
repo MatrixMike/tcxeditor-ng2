@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { TCXData } from '../editor/interfaces';
 
-import {Router} from '@angular/router';
-import {UploaderService } from '../uploader.service';
-import {EditorService} from '../editor.service';
-import { FirebaseService} from '../firebase.service';
+import { Router } from '@angular/router';
+import { UploaderService } from '../uploader.service';
+import { EditorService } from '../editor.service';
+import { FirebaseService } from '../firebase.service';
 
 interface Blob {
     name: string
@@ -11,45 +12,49 @@ interface Blob {
 
 
 @Component({
-  selector: 'app-upload',
-  templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+    selector: 'app-upload',
+    templateUrl: './upload.component.html',
+    styleUrls: ['./upload.component.scss']
 })
 export class UploadComponent implements OnInit {
-    browseButton: string = 'choose .tcx file';
+    browseButton: string;
+    demoButton: string;
 
-  constructor(private router: Router, 
-              private uploader: UploaderService,
-              private editor: EditorService,
-              private fb: FirebaseService) { }
+    constructor(private router: Router,
+        private uploader: UploaderService,
+        private editor: EditorService,
+        private fb: FirebaseService) { }
 
-  ngOnInit() {
-  }
-
+    ngOnInit() {
+        this.browseButton = 'choose .tcx file';
+        this.demoButton = 'Load demo data';
+    }
     demo() {
+        this.demoButton = 'Converting...';
         this.uploader.getDummyData()
-        .subscribe( rawTcx => {
-            this.uploader.xml2json(rawTcx)
-                .then(json => {
-                    this.editor.setTcxData('demo.tcx', json);
-                    this.router.navigate(['editor']);
-                })
-                .catch( err => {
-                    console.log(err)
-                });
-        });
+            .subscribe(rawTcx => {
+                this.uploader.xml2json(rawTcx)
+                    .then(json => {
+                        this.editor.setTcxData('demo.tcx', json);
+                        this.router.navigate(['editor']);
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+            });
     }
 
     upload(e) {
+        this.browseButton = 'Loading...';
         let blob: Blob = e.target.files[0];
 
         this.uploader.readBlob(blob)
-            .then( (res: string) => {
+            .then((res: string) => {
                 this.browseButton = 'Converting...';
                 // console.log(typeof res);
                 return this.uploader.xml2json(res);
             })
-            .then( json => {
+            .then((json:TCXData) => {
                 // console.log(json);
                 // store data in Editor service
                 this.editor.setTcxData(blob.name, json);
@@ -58,9 +63,7 @@ export class UploadComponent implements OnInit {
 
                 this.router.navigate(['editor']);
             })
-            .catch( err => {
-                console.error(err);
-            });
+            .catch( err => console.error(err) );
     }
 
 }

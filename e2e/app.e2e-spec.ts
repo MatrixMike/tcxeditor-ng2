@@ -1,10 +1,10 @@
-import { FirebasePage } from './app.po';
+import { Tcx16Page } from './app.po';
 
-describe('firebase App', function() {
-  let page: FirebasePage;
+describe('tcx16 App', function() {
+  let page: Tcx16Page;
 
   beforeEach(() => {
-    page = new FirebasePage();
+    page = new Tcx16Page();
   });
 
   it('should display message saying app works', () => {

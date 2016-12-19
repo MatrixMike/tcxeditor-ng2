@@ -18,14 +18,36 @@ export class MapComponent implements OnInit, OnChanges {
     constructor() {}
 
     ngOnInit() {
-        this.map = new google.maps.Map(document.getElementById('map'), {
+        let mapDomElement = document.getElementById('map');
+        this.map = new google.maps.Map(mapDomElement, {
             center: new google.maps.LatLng(52, 0),
             zoom: 7
         });
 
-        this.map.addListener('click', (evt: google.maps.MouseEvent) => {
-            this.clickHandler.next(evt);
-        });
+        let overlay = new google.maps.OverlayView();
+        overlay.draw = function() {};
+        overlay.setMap(this.map);
+
+        google.maps.event.addDomListener(mapDomElement, 'click', (evt) => {
+            var point = new google.maps.Point(evt.clientX, evt.clientY);
+            var latLng = overlay.getProjection().fromDivPixelToLatLng(point);
+            // console.log(latLng);
+            this.clickHandler.next({
+                "latLng": latLng,
+                "shift": evt.shiftKey
+            });
+            // this.clickHandler.next({
+            //     latLng: {
+            //         lat: latLng.lat(),
+            //         lng: latLng.lng() 
+            //     },
+            //     shift: evt.shiftKey
+            // });
+        })
+
+        // this.map.addListener('click', (evt: google.maps.MouseEvent) => {
+        //     this.clickHandler.next(evt);
+        // });
 
         this.map.addListener('zoom_changed', () => {
             this.drawRoute(false);

@@ -2,8 +2,8 @@
     <h3>Let me know your experience</h3>
 
     <div *ngIf="!comments" class="editor">
-        <p>Did the app work? If so, let me now which device you use. If not, please provide details of what you did and what you
-            hoped / expected it would do.</p>
+        <p>Did the app work? If so, let me now which device you use. If not, please provide details of what you did and what
+            you hoped / expected it would do.</p>
 
         <form (submit)="addComment(comment.value, email.value)">
             <div class="form-container">
@@ -16,7 +16,7 @@
                     </md-input>
                 </div>
                 <div class="button-container">
-                    <button type="submit" md-raised-button color="accent">Send</button>
+                    <button type="submit" md-raised-button color="primary">Send</button>
                 </div>
             </div>
         </form>

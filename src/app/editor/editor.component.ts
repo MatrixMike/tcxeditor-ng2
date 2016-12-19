@@ -27,6 +27,7 @@ export class EditorComponent implements OnInit {
     rawLapsData: Laps = [];
     summaryData: SummaryData[] = [];
     tcxData: SafeUrl;
+    lapScrollTo: number;
 
     constructor(private router: Router,
         private sanitizer: DomSanitizer,
@@ -59,7 +60,7 @@ export class EditorComponent implements OnInit {
     }
 
     lapsHandler(e: TpSelectionEvent) {
-        console.log('lapsHandler', e);
+        // console.log('lapsHandler', e);
         if (e.shift && e.lap === this.lastClick.lap) {
             // console.log(e.tp, this.lastClick.tp);
             let mn = Math.min(e.tp, this.lastClick.tp);
@@ -77,19 +78,23 @@ export class EditorComponent implements OnInit {
 
     // On a mouse click, scroll to tp and select it 
     mapClickHandler(evt) {
+        console.log(evt);
         let closest = findClosest(this.rawLapsData, evt.latLng);
-
+        console.log(closest);
         let event = {
             lap: closest[0],
             tp: closest[1],
-            shift: false
+            shift: evt.shift
         };
 
         this.zone.run( () => {
-            console.log('mapClickHandler', event);
+            // console.log('mapClickHandler', event);
             this.lapsHandler(event);
+            let off = Math.max(0, document.querySelector('#tp'+event.lap+'-'+event.tp)['offsetTop'] - 40);
+            console.log(`#tp${event.lap}-${event.tp} at ${off}`);
+            // document.querySelector('#lapContainer').scrollTop = off;
+            this.lapScrollTo = off;
         });
-        document.querySelector('#lapContainer').scrollTop = document.querySelector('#tp'+event.lap+'-'+event.tp)['offsetTop'];
     }
 
     initialiseSelectedTps() {
@@ -118,10 +123,6 @@ export class EditorComponent implements OnInit {
         // Now show user the other comments
         this.comments = 
             this.fb.comments            
-                .map(v => {
-                    console.log(v);
-                    v['date'] = new Date(v['date']);
-                    return v;
-                });
+                .map(v => Object.assign(v, {date: new Date(v['date'])}));
     }
 }

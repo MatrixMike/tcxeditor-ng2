@@ -10,12 +10,18 @@
 
     <div class="call-action">
         <md-card>
-            <img md-card-image src="assets/tcx.png" alt="">
+            <img md-card-image src="assets/tcx.png" alt="tcx file">
             <md-card-content>
                 <h3>Upload a file</h3>
-                <input type="file" (change)="upload($event)">
-                <p>(You can convert a .fit file to .tcx using <a href="http://connect.garmin.com/"> Garmin Connect's</a> export
-                    functionality.)</p>
+
+                    <input id="file-input" type="file"  (change)="upload($event)" class="ng-hide" />
+                    <label for="file-input" md-raised-button class="md-accent" >{{browseButton}}</label>
+                    <p>
+                        (You can convert a .fit file to .tcx using <a href="http://connect.garmin.com/"> Garmin Connect's</a> export
+                    functionality.)
+                    </p>
+
+                
             </md-card-content>
         </md-card>
 
@@ -23,10 +29,12 @@
             <img md-card-image src="assets/demo.png" alt="">
             <md-card-content>
                 <h3>Try the demo</h3>
-                <button md-raised-button color="accent" (click)="demo()">Load demo data</button>
+
+                    <button md-raised-button color="accent" (click)="demo()">{{demoButton}}</button>
+
             </md-card-content>
         </md-card>
     </div>
-    <!--<p><a [routerLink]="['feedback']">User comments and (anonymous) analytics</a></p>-->
+    <p><a [routerLink]="['feedback']">User comments and (anonymous) analytics</a></p>
 
 </div>

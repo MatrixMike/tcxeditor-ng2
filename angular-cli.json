@@ -1,7 +1,7 @@
 {
   "project": {
-    "version": "1.0.0-beta.19-3",
-    "name": "firebase"
+    "version": "1.0.0-beta.21",
+    "name": "tcx16"
   },
   "apps": [
     {
@@ -18,7 +18,7 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.scss" 
+        "styles.scss"
       ],
       "scripts": [],
       "environments": {

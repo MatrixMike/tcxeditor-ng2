@@ -31,7 +31,7 @@ export class TrackpointComponent {
     constructor() {}
 
     handleClick(evt: MouseEvent) {
-        console.log(evt);
+        // console.log(evt);
         this.clicked.next({
             shift: evt.shiftKey
         })
