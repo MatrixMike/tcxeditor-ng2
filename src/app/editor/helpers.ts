@@ -29,6 +29,12 @@ export var getTrackpoints = function(lapsData) {
 export var getSummaryData = function(lapsData) {
 	return lapsData.map(lap => {
 		let tps = lap.Track[0].Trackpoint;
+		let avgSpeed;
+		if (lap.Extensions[0]['LX']) {
+			avgSpeed = lap.Extensions[0].LX[0].AvgSpeed[0]
+		} else if (lap.Extensions[0]['ns3:LX']) {
+			avgSpeed = lap.Extensions[0]["ns3:LX"][0]['ns3:AvgSpeed'][0]
+		}
 		return {
 			startTime: new Date(tps[0].Time[0]),
 			endTime: new Date (tps[tps.length - 1].Time[0]),
@@ -37,7 +43,7 @@ export var getSummaryData = function(lapsData) {
 			distance: lap.DistanceMeters[0],
 			estDist: getLapDistance(lap),
 			maxSpeed: lap.MaximumSpeed[0],
-			avgSpeed: parseFloat(lap.Extensions[0].LX[0].AvgSpeed[0])
+			avgSpeed: parseFloat(avgSpeed)
 		};
 	});
 };
@@ -106,6 +112,7 @@ export var findClosest = function(laps: Laps, point) {
 
 	plat = point.lat();
 	plng = point.lng();
+	// console.log(`findClosest: ${plat}, ${plng}`);
 
 	res = laps.reduce( (lapAcc, lap, lapCount) => {
 		// get shortest distance for this lap
@@ -117,21 +124,25 @@ export var findClosest = function(laps: Laps, point) {
 				dist = Math.pow(plat - lat, 2) + Math.pow(plng - lng, 2);
 
 				if (dist < acc[1]) {
+					// console.log(idx, "New closest", dist)
 					return [idx, dist];
 				} else {
+					// console.log(idx, "Not closer", dist)
 					return acc;
 				}
 			} else return acc;
 		}, [0, lapAcc[2]]);
+		// console.log("thisLap", thisLap);
 
 		// compare this with best so far
 		if (thisLap[1] < lapAcc[2]) {
 			// i.e. return [lap, index in lap, dist]
-			return [lapCount].concat(thisLap);
+			// return [lapCount].concat(thisLap);
+			return [lapCount, ...thisLap];
 		} else {
 			return lapAcc;
 		}
-	}, [0, 0, 10000000]);
+	}, [0, 0, Infinity]);
 
 	// we do not need the distance value
 	return res.slice(0, -1);
