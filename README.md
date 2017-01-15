@@ -13,3 +13,10 @@ npm install --save @types/google-maps
 npm install @angular/material --save
 Not using any of the widgets that require hammer.js
 
+## Deploying
+
+```
+ng build --prod --aot
+firebase deploy
+
+```

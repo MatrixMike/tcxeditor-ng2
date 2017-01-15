@@ -28,26 +28,22 @@ export class MapComponent implements OnInit, OnChanges {
         overlay.draw = function() {};
         overlay.setMap(this.map);
 
-        google.maps.event.addDomListener(mapDomElement, 'click', (evt) => {
-            var point = new google.maps.Point(evt.clientX, evt.clientY);
-            var latLng = overlay.getProjection().fromDivPixelToLatLng(point);
-            // console.log(latLng);
-            this.clickHandler.next({
-                "latLng": latLng,
-                "shift": evt.shiftKey
-            });
-            // this.clickHandler.next({
-            //     latLng: {
-            //         lat: latLng.lat(),
-            //         lng: latLng.lng() 
-            //     },
-            //     shift: evt.shiftKey
-            // });
-        })
-
-        // this.map.addListener('click', (evt: google.maps.MouseEvent) => {
-        //     this.clickHandler.next(evt);
+        /* Use a DOM listener in order also to get shiftKey information
+         * **BUT** Seems to interfere with findClosest()
+         */
+        // google.maps.event.addDomListener(mapDomElement, 'click', (evt) => {
+        //     var point = new google.maps.Point(evt.clientX, evt.clientY);
+        //     var latLng = overlay.getProjection().fromDivPixelToLatLng(point);
+        //     // console.log(latLng);
+        //     this.clickHandler.next({
+        //         "latLng": latLng,
+        //         "shift": evt.shiftKey
+        //     });
         // });
+
+        this.map.addListener('click', (evt: google.maps.MouseEvent) => {
+            this.clickHandler.next(evt);
+        });
 
         this.map.addListener('zoom_changed', () => {
             this.drawRoute(false);
@@ -106,7 +102,9 @@ export class MapComponent implements OnInit, OnChanges {
 
         this.cyclePath.setMap(this.map);
 
+        // Event Handler
         google.maps.event.addListener(this.cyclePath, 'click', (evt: google.maps.MouseEvent) => {
+            evt
             this.clickHandler.next(evt);
         });
 
