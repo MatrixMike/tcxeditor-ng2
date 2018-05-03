@@ -4,7 +4,7 @@ import { TCXData } from '../editor/interfaces';
 import { Router } from '@angular/router';
 import { UploaderService } from '../uploader.service';
 import { EditorService } from '../editor.service';
-import { FirebaseService } from '../firebase.service';
+// import { FirebaseService } from '../firebase.service';
 
 interface Blob {
     name: string
@@ -22,8 +22,8 @@ export class UploadComponent implements OnInit {
 
     constructor(private router: Router,
         private uploader: UploaderService,
-        private editor: EditorService,
-        private fb: FirebaseService) { }
+        // private fb: FirebaseService,
+        private editor: EditorService) { }
 
     ngOnInit() {
         this.browseButton = 'choose .tcx file';
@@ -59,7 +59,7 @@ export class UploadComponent implements OnInit {
                 // store data in Editor service
                 this.editor.setTcxData(blob.name, json);
                 // Send first value to analytics
-                this.fb.saveAnalytics(this.editor.getFirstValue());
+                // this.fb.saveAnalytics(this.editor.getFirstValue());
 
                 this.router.navigate(['editor']);
             })

@@ -23,8 +23,8 @@ import {TpSelectionEvent} from '../interfaces';
       </app-lap>
     </div>
   `,
-  styleUrls: ['./lap.scss']
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./lap.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LapsComponent implements OnChanges {
     @Input() lapsData: Object[];

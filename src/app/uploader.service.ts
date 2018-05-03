@@ -66,5 +66,4 @@ export class UploaderService {
             .map(res => res.text());
     }
 
-
 }

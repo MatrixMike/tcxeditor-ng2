@@ -1,39 +1,46 @@
 <div id="editor" class="app-content">
 
-  <app-summary [data]="summaryData"></app-summary>
+    <app-summary [data]="summaryData"></app-summary>
 
-  <div class="trackpoint-intro">
-    <h2>Trackpoint data</h2>
-    <p>
-      Choose 'trackpoints' to delete from the rows below or click on the map (not the markers). Use Shift+Click to select multiple
-      rows.
-    </p>
-  </div>
+    <div class="trackpoint-intro">
+        <h2>Trackpoint data</h2>
+        <p>
+            Choose 'trackpoints' to delete from the rows below or click on the map (not the markers). Use Shift+Click to select multiple
+            rows.
+        </p>
+    </div>
 
-  <div class="laps-map">
-    <app-laps 
-      [lapsData]="rawLapsData" 
-      [selectedTps]="selectedTps" 
-      [mapClickedTp]="clickedTp"
-      [lapScrollTo]="lapScrollTo"
-      (lapsHandler)="lapsHandler($event)">
-    </app-laps>
+    <div class="laps-map">
+        <app-laps 
+            [lapsData]="rawLapsData" 
+            [selectedTps]="selectedTps" 
+            [mapClickedTp]="clickedTp" 
+            [lapScrollTo]="lapScrollTo" 
+            (lapsHandler)="lapsHandler($event)">
+        </app-laps>
 
-    <app-map 
-      [lapsData]="rawLapsData" 
-      [selectedTps]="selectedTps" 
-      (clickHandler)="mapClickHandler($event)">
-    </app-map>
+        <app-map 
+            [lapsData]="rawLapsData" 
+            [selectedTps]="selectedTps" 
+            (clickHandler)="mapClickHandler($event)">
+        </app-map>
 
-  </div>
-  
-  <div class="controls">
-    <button md-raised-button color="accent" (click)="deleteSelectedTps()">Delete points</button>
-    <a routerLink="/upload" md-raised-button color="accent">Return to Upload</a>
-    <a [href]="tcxData" md-raised-button color="accent" *ngIf="changesMade" download="{{fname}}">Download data</a>
-  </div>
+    </div>
 
-  <app-feedback-widget color="accent" [comments]="comments | async" (newComment)="handleComment($event)">
-  </app-feedback-widget>
+    <div class="controls">
+        <button md-raised-button color="accent" (click)="deleteSelectedTps()">Delete points</button>
+        <a routerLink="/upload" md-raised-button color="accent">Return to Upload</a>
+        <a [href]="tcxData" 
+            md-raised-button 
+            color="accent" 
+            *ngIf="changesMade" 
+            download="{{fname}}">Download data</a>
+    </div>
+
+    <!-- <app-feedback-widget 
+        color="accent" 
+        [comments]="comments | async" 
+        (newComment)="handleComment($event)">
+    </app-feedback-widget> -->
 
 </div>
